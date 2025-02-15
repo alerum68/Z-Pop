@@ -1,6 +1,3 @@
-import unittest
-
-
 def gate_and(input1, input2):
     """ an AND gate (input1 ^ input2) """
     gate1 = input1 and input2
@@ -122,25 +119,22 @@ def z_score(x, mu, sigma):
 
 
 # This is our testing function
+def test():
+    test_cases = []
 
-class TestZScore(unittest.TestCase):
+    for pop_num, population in enumerate([population1, population2, population3], start=1):
+        pop_avg = mean(population)
+        pop_sd = stdev(population, pop_avg)
 
-    def test_z_score(self):
-        pop1_avg = mean(population1)
-        pop1_sd = stdev(population1, pop1_avg)
+        for value in population:
+            expected = (value - pop_avg) / pop_sd
+            actual = z_score(value, pop_avg, pop_sd)
+            test_cases.append((f"{pop_num}", value, expected, actual))
 
-        pop2_avg = mean(population2)
-        pop2_sd = stdev(population2, pop2_avg)
-
-        pop3_avg = mean(population3)
-        pop3_sd = stdev(population3, pop3_avg)
-
-        self.assertAlmostEqual(z_score(pop1_avg, pop1_avg, pop1_sd), 0.0, places=13)
-        self.assertAlmostEqual(z_score(greatest(population2), pop2_avg, pop2_sd),
-                               (greatest(population2) - pop2_avg) / pop2_sd, places=13)
-        self.assertAlmostEqual(z_score(least(population3), pop3_avg, pop3_sd),
-                               (least(population3) - pop3_avg) / pop3_sd, places=13)
+    print("Population,Value,Expected Z-Score,Actual Z-Score,Result")
+    for case_name, value, expected, actual in test_cases:
+        result = "PASS" if abs(expected - actual) < 10 ** -13 else "FAIL"
+        print(f"{case_name},{value},{expected:.13f},{actual:.13f},{result}")
 
 
-if __name__ == '__main__':
-    unittest.main()
+test()
