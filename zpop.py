@@ -118,8 +118,8 @@ def z_score(x, mu, sigma):
     # it will be returned by the z_score function
 
 
-# This is our testing function. It prints and compares each population value with the expected score, actual score,
-# and results.
+# This is our testing function. It compares and prints each population value with the expected score, actual score,
+# and pass/fail results.
 def test():
     test_cases = []
 
